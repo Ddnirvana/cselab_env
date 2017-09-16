@@ -5,7 +5,13 @@ RUN apt-get -qq update && apt-get install -y curl vim git build-essential net-to
 
 RUN cp /usr/include/fuse /usr/local/include/ -r
 
-COPY README.md /home/
+RUN apt-get -qq update && apt-get install -y sudo;
+
+RUN echo -e "000\n000"| passwd root && useradd --no-log-init -r -m -g root stu && echo -e "000\n000" | passwd stu
+
+COPY README.md /home/stu/
+
+USER stu
 
 #$VOLUME ["/root"]
-WORKDIR /home
+WORKDIR /home/stu/
