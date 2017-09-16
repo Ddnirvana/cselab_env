@@ -7,9 +7,13 @@ RUN cp /usr/include/fuse /usr/local/include/ -r
 
 RUN apt-get -qq update && apt-get install -y sudo;
 
-RUN ls ;echo -e "000\n000"| passwd root && useradd --no-log-init -r -m -g root stu && echo -e "000\n000" | passwd stu
+COPY mypasswd /home/
+
+RUN useradd --no-log-init -r -m -g root stu
 
 COPY README.md /home/stu/
+
+RUN cat /home/mypasswd | chpasswd
 
 USER stu
 
